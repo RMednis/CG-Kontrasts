@@ -4,5 +4,5 @@ Programma attēlu kontrasta uzlabošanai izmantojot dažādas uzlabošanas metod
 Grupas Darbs:
 - Ksenija Danilets
 - Jūlija Ciša
-- Dmitrijs Ļašenko
+- Dmitrijs Ļašenko (-_-)
 - Reinis Gunārs Mednis
