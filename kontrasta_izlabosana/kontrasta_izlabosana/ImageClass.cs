@@ -17,6 +17,14 @@ namespace kontrasta_izlabosana
         public PixelRGB[,] imgOriginal;
         public PixelRGB[,] imgCustom;
 
+        public HistogrammClass hstOriginal;
+        public HistogrammClass hstCustom;
+        public ImageClass()
+        {
+            hstOriginal = new HistogrammClass();
+            hstCustom = new HistogrammClass();
+        }
+
         public void ReadImage(Bitmap bmp)
         {
             //initializing arrays to store pixels in different color models
@@ -51,7 +59,39 @@ namespace kontrasta_izlabosana
             }
             bmp.UnlockBits(bmpData);//unlocking image data
 
-            //hstCustom.readHistogramHSV(imgHSV);
+            hstOriginal.readHistogram(imgOriginal);
+            hstCustom.readHistogram(imgCustom);
+        }
+
+        public void RefillArraysFillHistogram(Bitmap bmp)
+        {
+            var bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, bmp.PixelFormat);
+
+            IntPtr ptr = IntPtr.Zero;
+            int pixelComponents;
+
+            //determining the number of color components in an image
+            if (bmpData.PixelFormat == PixelFormat.Format24bppRgb) pixelComponents = 3;
+            else if (bmpData.PixelFormat == PixelFormat.Format32bppArgb) pixelComponents = 4;
+            else pixelComponents = 0;
+
+            var row = new byte[bmp.Width * pixelComponents];
+
+            for (int y = 0; y < bmp.Height; y++)
+            {
+                ptr = bmpData.Scan0 + y * bmpData.Stride; //stride - skenesanas platums
+                Marshal.Copy(ptr, row, 0, row.Length);
+
+                for (int x = 0; x < bmp.Width; x++)
+                {
+                    //filling pixel arrays in different color models
+                    imgOriginal[x, y] = new PixelRGB(row[pixelComponents * x + 2], row[pixelComponents * x + 1], row[pixelComponents * x]);
+
+                    imgCustom[x, y] = new PixelRGB(row[pixelComponents * x + 2], row[pixelComponents * x + 1], row[pixelComponents * x]);
+                }
+            }
+            bmp.UnlockBits(bmpData);
+            hstCustom.readHistogram(imgCustom);
         }
 
         public Bitmap DrawImage(PixelRGB[,] img, string mode)
