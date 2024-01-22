@@ -85,7 +85,7 @@ namespace kontrasta_izlabosana
                 for (int x = 0; x < bmp.Width; x++)
                 {
                     //filling pixel arrays in different color models
-                    imgOriginal[x, y] = new PixelRGB(row[pixelComponents * x + 2], row[pixelComponents * x + 1], row[pixelComponents * x]);
+                    //imgOriginal[x, y] = new PixelRGB(row[pixelComponents * x + 2], row[pixelComponents * x + 1], row[pixelComponents * x]);
 
                     imgCustom[x, y] = new PixelRGB(row[pixelComponents * x + 2], row[pixelComponents * x + 1], row[pixelComponents * x]);
                 }

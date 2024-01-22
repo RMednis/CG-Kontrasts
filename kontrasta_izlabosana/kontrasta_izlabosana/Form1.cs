@@ -32,7 +32,7 @@ namespace kontrasta_izlabosana
             radioButton4.Enabled = false;
             trackBar1.Enabled = false;
 
-            int middleValue = trackBar1.Maximum / 2;
+            int middleValue = 0;
             trackBar1.Value = middleValue;
             initialContrastValue = middleValue;
         }
@@ -60,9 +60,6 @@ namespace kontrasta_izlabosana
                 radioButton2.Enabled = true;
                 radioButton3.Enabled = true;
                 radioButton4.Enabled = true;
-                trackBar1.Enabled = true;
-                trackBar_contrastfactor.Enabled = true;
-                trackBar_contrastthreshold.Enabled = true;
             }
         }
 
@@ -90,6 +87,17 @@ namespace kontrasta_izlabosana
         private void buttonReset_Click(object sender, EventArgs e)
         {
             pictureBox2.Image = imageClass.DrawImage(imageClass.imgOriginal, "RGB");
+
+            //setting radioButtons inactive
+            radioButton1.Checked = false;
+            radioButton2.Checked = false;
+            radioButton3.Checked = false;
+            radioButton4.Checked = false;
+
+            //setting track bars to default value
+            trackBar1.Value = 0;
+            trackBar_contrastfactor.Value = trackBar_contrastfactor.Maximum / 2;
+            trackBar_contrastthreshold.Value = trackBar_contrastthreshold.Maximum / 2;
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
@@ -141,6 +149,8 @@ namespace kontrasta_izlabosana
             }
         }
 
+        //Third contrast correction method
+        //Ksenia Danilets
         private Bitmap AdjustContrast(Bitmap originalImage)
         {
             Bitmap adjustedImage = new Bitmap(originalImage.Width, originalImage.Height);
