@@ -150,7 +150,7 @@ namespace kontrasta_izlabosana
         }
 
         //Third contrast correction method
-        //Ksenia Danilets
+        //Ksenia Danilets(deadunicorn2029 and Lithadian(my computer in a service, so im working from other person computer))
         private Bitmap AdjustContrast(Bitmap originalImage)
         {
             Bitmap adjustedImage = new Bitmap(originalImage.Width, originalImage.Height);
