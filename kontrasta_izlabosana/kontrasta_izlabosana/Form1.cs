@@ -220,11 +220,114 @@ namespace kontrasta_izlabosana
             {
                 Bitmap originalImage = new Bitmap(pictureBox1.Image);
                 Bitmap bitmap = SigmoidContrast.SigmoidContrastAdjust(originalImage, alpha, beta);
-                
+
                 pictureBox2.Image = bitmap;
 
                 imageClass.RefillArraysFillHistogram((Bitmap)pictureBox2.Image);
                 imageClass.hstCustom.drawHistogramm(chart2, "RGB");
+            }
+        }
+
+        public int windowSize = 5; // Размер окна для вычисления средней яркости
+        public int thresholdPercent = 15; // Порог в процентах
+
+        private void ThresholdContrast()
+        {
+            if (pictureBox1.Image != null)
+            {
+                Bitmap originalImage = new Bitmap(pictureBox1.Image);
+                Bitmap brightImage = new Bitmap(originalImage.Width, originalImage.Height);
+
+                
+
+                for (int x = 0; x < originalImage.Width; x++)
+                {
+                    for (int y = 0; y < originalImage.Height; y++)
+                    {
+                        int sum = 0;
+                        int count = 0;
+
+                        // Вычисляем среднюю яркость в окне
+                        for (int i = x - windowSize / 2; i <= x + windowSize / 2; i++)
+                        {
+                            for (int j = y - windowSize / 2; j <= y + windowSize / 2; j++)
+                            {
+                                if (i >= 0 && i < originalImage.Width && j >= 0 && j < originalImage.Height)
+                                {
+                                    Color pixel = originalImage.GetPixel(i, j);
+                                    int grayValue = (int)(pixel.R * 0.3 + pixel.G * 0.59 + pixel.B * 0.11);
+                                    sum += grayValue;
+                                    count++;
+                                }
+                            }
+                        }
+
+                        int averageBrightness = GetMedianBrightness(originalImage, x, y, windowSize);
+                        Color currentPixel = originalImage.GetPixel(x, y);
+                        int currentBrightness = (int)(currentPixel.R * 0.3 + currentPixel.G * 0.59 + currentPixel.B * 0.11);
+
+                        if (currentBrightness < averageBrightness * (1 - thresholdPercent / 100.0))
+                        {
+                            brightImage.SetPixel(x, y, Color.Black);
+                        }
+                        else
+                        {
+                            brightImage.SetPixel(x, y, Color.White);
+                        }
+                    }
+                }
+
+                pictureBox2.Image = brightImage;
+                imageClass.RefillArraysFillHistogram((Bitmap)pictureBox2.Image);
+                imageClass.hstCustom.drawHistogramm(chart2, "RGB");
+            }
+        }
+
+        private int GetMedianBrightness(Bitmap image, int centerX, int centerY, int windowSize)
+        {
+            List<int> values = new List<int>();
+
+            for (int i = centerX - windowSize / 2; i <= centerX + windowSize / 2; i++)
+            {
+                for (int j = centerY - windowSize / 2; j <= centerY + windowSize / 2; j++)
+                {
+                    if (i >= 0 && i < image.Width && j >= 0 && j < image.Height)
+                    {
+                        Color pixel = image.GetPixel(i, j);
+                        int grayValue = (int)(pixel.R * 0.3 + pixel.G * 0.59 + pixel.B * 0.11);
+                        values.Add(grayValue);
+                    }
+                }
+            }
+            values.Sort();
+            return values[values.Count / 2];
+        }
+
+        private void trackBar2_Scroll(object sender, EventArgs e)
+        {
+            windowSize = trackBar2.Value;
+            label5.Text = "Windows size:" + windowSize.ToString();
+            ThresholdContrast();
+        }
+
+        private void trackBar3_Scroll(object sender, EventArgs e)
+        {
+            thresholdPercent = trackBar3.Value;
+            label6.Text = "Threshold percent:" + thresholdPercent.ToString();
+            ThresholdContrast();
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton2.Checked)
+            {
+                trackBar2.Enabled = true;
+                trackBar3.Enabled = true;
+            }
+            else
+            {
+                trackBar2.Enabled = false;
+                trackBar3.Enabled = false;
             }
         }
     }
