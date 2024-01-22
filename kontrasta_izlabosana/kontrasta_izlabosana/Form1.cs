@@ -150,7 +150,7 @@ namespace kontrasta_izlabosana
         }
 
         //Third contrast correction method
-        //Ksenia Danilets(deadunicorn2029 and Lithadian(my computer in a service, so im working from other person computer))
+        //Ksenia Danilets(deadunicorn2029 and Lithadian(my computer in a service, so im working from other person computer)
         private Bitmap AdjustContrast(Bitmap originalImage)
         {
             Bitmap adjustedImage = new Bitmap(originalImage.Width, originalImage.Height);
@@ -328,6 +328,18 @@ namespace kontrasta_izlabosana
             {
                 trackBar2.Enabled = false;
                 trackBar3.Enabled = false;
+            }
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton4.Checked && pictureBox1.Image != null)
+            {
+                float k = 6.0f; // The value of k determines the degree of contrast enhancement
+                imageClass.EnhanceLocalContrast(k);
+                pictureBox2.Image = imageClass.DrawImage(imageClass.imgCustom, currentColorFormat);
+                imageClass.RefillArraysFillHistogram((Bitmap)pictureBox2.Image);
+                imageClass.hstCustom.drawHistogramm(chart2, currentColorFormat);
             }
         }
     }

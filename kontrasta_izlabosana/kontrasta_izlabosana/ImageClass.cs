@@ -94,6 +94,67 @@ namespace kontrasta_izlabosana
             hstCustom.readHistogram(imgCustom);
         }
 
+        public void EnhanceLocalContrast(float k)//dima
+        {
+
+            int windowSize = 3;
+            int border = windowSize / 2;
+            int width = imgOriginal.GetLength(0);
+            int height = imgOriginal.GetLength(1);
+
+
+            PixelRGB[,] tempImg = new PixelRGB[width, height];// Create a temporary array to store contrast-enhanced pixels
+
+            for (int x = border; x < width - border; x++)
+            {
+                for (int y = border; y < height - border; y++)
+                {
+                    float sum = 0f;
+                    float sumSq = 0f;
+                    int count = 0;
+
+                    for (int i = -border; i <= border; i++)
+                    {
+                        for (int j = -border; j <= border; j++)
+                        {
+
+                            sum += imgOriginal[x + i, y + j].I; // Summarizing pixel intensity
+                            sumSq += imgOriginal[x + i, y + j].I * imgOriginal[x + i, y + j].I; // Summation of intensity squares
+                            count++;// Increasing the pixel counter
+
+                        }
+                    }
+                    float mean = sum / count;// Calculation of average intensity in a "window"
+
+                    float std = (float)Math.Sqrt((sumSq / count) - (mean * mean));// Getting the current pixel from the original image
+
+
+
+                    PixelRGB originalPixel = imgOriginal[x, y];
+                    // Creating a new pixel with improved intensity
+                    tempImg[x, y] = new PixelRGB(
+                        ClampToByte(mean + k * (originalPixel.R - mean)),
+                        ClampToByte(mean + k * (originalPixel.G - mean)),
+                        ClampToByte(mean + k * (originalPixel.B - mean))
+                    );
+                }
+            }
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    imgCustom[x, y] = tempImg[x, y] ?? imgOriginal[x, y];
+                }
+            }
+
+            hstOriginal.readHistogram(imgOriginal);
+            hstCustom.readHistogram(imgCustom);
+        }
+        private byte ClampToByte(float value)// diapazon kontrol.
+        {
+            return (byte)Math.Max(0, Math.Min(255, value));
+        }
+
         public Bitmap DrawImage(PixelRGB[,] img, string mode)
         {
             IntPtr ptr = IntPtr.Zero;
