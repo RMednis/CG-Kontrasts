@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -108,7 +108,7 @@
             this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Location = new System.Drawing.Point(642, 27);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(268, 348);
+            this.groupBox1.Size = new System.Drawing.Size(268, 358);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Contrast Correction Methods";
@@ -137,7 +137,7 @@
             // 
             this.trackBar_contrastfactor.Enabled = false;
             this.trackBar_contrastfactor.Location = new System.Drawing.Point(8, 111);
-            this.trackBar_contrastfactor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.trackBar_contrastfactor.Margin = new System.Windows.Forms.Padding(2);
             this.trackBar_contrastfactor.Name = "trackBar_contrastfactor";
             this.trackBar_contrastfactor.Size = new System.Drawing.Size(256, 45);
             this.trackBar_contrastfactor.TabIndex = 5;
@@ -148,7 +148,7 @@
             // 
             this.trackBar_contrastthreshold.Enabled = false;
             this.trackBar_contrastthreshold.Location = new System.Drawing.Point(8, 61);
-            this.trackBar_contrastthreshold.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.trackBar_contrastthreshold.Margin = new System.Windows.Forms.Padding(2);
             this.trackBar_contrastthreshold.Maximum = 100;
             this.trackBar_contrastthreshold.Minimum = 1;
             this.trackBar_contrastthreshold.Name = "trackBar_contrastthreshold";
@@ -184,10 +184,10 @@
             this.radioButton3.AutoSize = true;
             this.radioButton3.Location = new System.Drawing.Point(6, 212);
             this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(87, 17);
+            this.radioButton3.Size = new System.Drawing.Size(164, 17);
             this.radioButton3.TabIndex = 2;
             this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Third method";
+            this.radioButton3.Text = "Third method: using Truncate";
             this.radioButton3.UseVisualStyleBackColor = true;
             this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
             // 
@@ -314,7 +314,7 @@
             this.groupBox4.Controls.Add(this.label3);
             this.groupBox4.Controls.Add(this.label2);
             this.groupBox4.Controls.Add(this.label1);
-            this.groupBox4.Location = new System.Drawing.Point(642, 381);
+            this.groupBox4.Location = new System.Drawing.Point(642, 391);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(268, 78);
             this.groupBox4.TabIndex = 5;
@@ -359,32 +359,32 @@
             // 
             // chart1
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chart1.Legends.Add(legend3);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(29, 391);
             this.chart1.Name = "chart1";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chart1.Series.Add(series3);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(285, 171);
             this.chart1.TabIndex = 6;
             this.chart1.Text = "chart1";
             // 
             // chart2
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chart2.Legends.Add(legend4);
+            chartArea2.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart2.Legends.Add(legend2);
             this.chart2.Location = new System.Drawing.Point(338, 391);
             this.chart2.Name = "chart2";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chart2.Series.Add(series4);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart2.Series.Add(series2);
             this.chart2.Size = new System.Drawing.Size(285, 171);
             this.chart2.TabIndex = 7;
             this.chart2.Text = "chart2";
