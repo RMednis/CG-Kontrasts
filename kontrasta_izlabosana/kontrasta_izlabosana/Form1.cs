@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -61,6 +61,8 @@ namespace kontrasta_izlabosana
                 radioButton3.Enabled = true;
                 radioButton4.Enabled = true;
                 trackBar1.Enabled = true;
+                trackBar_contrastfactor.Enabled = true;
+                trackBar_contrastthreshold.Enabled = true;
             }
         }
 
@@ -167,5 +169,53 @@ namespace kontrasta_izlabosana
         }
 
 
+        // Kontrasta uzlabošana ar Sigmoid funkciju
+        // Reinis Gunārs Mednis
+
+        private int alpha = 50;
+        private int beta = 1;
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+                trackBar_contrastfactor.Enabled = true;
+                trackBar_contrastthreshold.Enabled = true;
+            }
+            else
+            {
+                trackBar_contrastfactor.Enabled = false;
+                trackBar_contrastthreshold.Enabled = false;
+            }
+        }
+
+        private void trackBar_contrastthreshold_ValueChanged(object sender, EventArgs e)
+        {
+            alpha = trackBar_contrastthreshold.Value;
+            label_contrastthreshold.Text = "Contrast Threshold:" + alpha.ToString();
+            updateSigmoidContrastImage();
+
+        }
+
+        private void trackBar_contrastfactor_ValueChanged(object sender, EventArgs e)
+        {
+            beta = trackBar_contrastfactor.Value;
+            label_contrasstfactor.Text = "Contrast Factor:" + beta.ToString();
+            updateSigmoidContrastImage();
+        }
+
+        private void updateSigmoidContrastImage()
+        {
+            if (pictureBox1.Image != null)
+            {
+                Bitmap originalImage = new Bitmap(pictureBox1.Image);
+                Bitmap bitmap = SigmoidContrast.SigmoidContrastAdjust(originalImage, alpha, beta);
+                
+                pictureBox2.Image = bitmap;
+
+                imageClass.RefillArraysFillHistogram((Bitmap)pictureBox2.Image);
+                imageClass.hstCustom.drawHistogramm(chart2, "RGB");
+            }
+        }
     }
 }
